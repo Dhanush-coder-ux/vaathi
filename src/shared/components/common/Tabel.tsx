@@ -46,7 +46,7 @@ export const Table = <T extends { id: string | number }>({
           </thead>
           <tbody>
             {currentData.length > 0 ? (
-              currentData.map((item, rowIndex) => (
+              currentData.map((item) => (
                 <tr key={item.id} className="border-b border-gray-100 hover:bg-gray-50/50 transition-colors">
                   {columns.map((col, colIndex) => (
                     <td key={colIndex} className="py-4 px-4 text-sm text-gray-600 align-middle">
