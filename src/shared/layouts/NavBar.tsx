@@ -9,20 +9,17 @@ const Navbar = ({ isOpen, setIsOpen }: NavbarProps) => {
         
     
         <div className="flex items-center gap-3">
-          <Layout
+         
+
+          <div className="h-10 flex items-center">
+          
+            <h1 className="text-xl font-bold text-emerald-500">Vaathi</h1>
+          </div>
+           <Layout
             onClick={() => setIsOpen(!isOpen)}
             size={22}
             className="cursor-pointer text-emerald-500"
           />
-
-          <div className="h-10 flex items-center">
-            {/* <img
-              src="/images/vaathi.png"
-              alt="Vaathi"
-              className="h-full w-auto object-contain scale-110"
-            /> */}
-            <h1 className="text-xl font-bold text-emerald-500">Vaathi</h1>
-          </div>
         </div>
 
         <div className="flex items-center gap-5 text-gray-700">
