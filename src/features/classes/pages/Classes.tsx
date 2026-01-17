@@ -1,6 +1,7 @@
-import React from 'react';
-// Note: Keeping the import path exactly as requested (Tabel vs Table)
+import  { useState } from 'react';
+import { Search, Filter, Plus,} from 'lucide-react'; // Import icons
 import { Table, type Column } from "../../../shared/components/common/Tabel";
+import Title from '../../../shared/components/common/Title';
 
 interface ClassProps {
   id: number;
@@ -43,6 +44,26 @@ const subjectsData: ClassProps[] = [
 ];
 
 const Classes = () => {
+  // 1. State for Text Search
+  const [searchQuery, setSearchQuery] = useState("");
+  
+  // 2. State for Status Filter (All / Live / Completed)
+  const [statusFilter, setStatusFilter] = useState<'All' | 'Live' | 'Completed'>('All');
+
+  // 3. Combined Filter Logic
+  const filteredData = subjectsData.filter((item) => {
+    // Step A: Check Search Text
+    const matchesSearch = 
+      item.className.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.Teacher.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.subject.toLowerCase().includes(searchQuery.toLowerCase());
+
+    // Step B: Check Status Dropdown
+    const matchesStatus = 
+      statusFilter === 'All' || item.status === statusFilter;
+
+    return matchesSearch && matchesStatus;
+  });
 
   const columns: Column<ClassProps>[] = [
     {
@@ -115,14 +136,68 @@ const Classes = () => {
   ];
 
   return (
-    <div className="bg-gray-50 min-h-screen">
-      <Table
-        data={subjectsData}
-        columns={columns}
+    <div className="bg-gray-50  p-6">
+      <Title
         title="Classes"
-        subtitle="Manage your class schedules, teachers, and subjects."
-        onCreate={() => alert("Create Class Modal")}
-        onSearch={(q) => console.log("Searching classes for:", q)}
+        subtitle="Manage and overview all your classes efficiently."
+      />
+
+      {/* 4. Toolbar Section */}
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6 mt-6">
+        
+        {/* Left Side: Search Bar */}
+        <div className="relative w-full sm:w-72">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+          <input
+            type="text"
+            placeholder="Search classes or teachers..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D96B4D]/20 focus:border-[#D96B4D] transition-all bg-white"
+          />
+        </div>
+
+        {/* Right Side: Filters & Actions */}
+        <div className="flex gap-3 w-full sm:w-auto">
+          
+          {/* Status Dropdown Filter */}
+          <div className="relative">
+            <select 
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value as 'All' | 'Live' | 'Completed')}
+              className="appearance-none bg-white border border-gray-200 text-gray-700 py-2 pl-4 pr-10 rounded-lg focus:outline-none cursor-pointer hover:bg-gray-50 transition-colors"
+            >
+              <option value="All">All Status</option>
+              <option value="Live">Live</option>
+              <option value="Completed">Completed</option>
+            </select>
+            <Filter className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 pointer-events-none" />
+          </div>
+          <div className="relative">
+            <select 
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value as 'All' | 'Live' | 'Completed')}
+              className="appearance-none bg-white border border-gray-200 text-gray-700 py-2 pl-4 pr-10 rounded-lg focus:outline-none cursor-pointer hover:bg-gray-50 transition-colors"
+            >
+              <option value="teacher">Teacher</option>
+              <option value="Live">Live</option>
+              <option value="Completed">Completed</option>
+            </select>
+            <Filter className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 pointer-events-none" />
+          </div>
+
+          {/* Create Button */}
+          <button className="bg-[#D96B4D] hover:bg-[#c25e41] text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 shadow-sm">
+            <Plus className="w-4 h-4" />
+            Create
+          </button>
+        </div>
+      </div>
+
+      {/* 5. Table with Filtered Data */}
+      <Table
+        data={filteredData}
+        columns={columns}
       />
     </div>
   );
