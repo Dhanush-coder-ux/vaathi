@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Save, X, ChevronDown } from 'lucide-react'; 
 
-
-// Dummy data for the Department Dropdown
 const departments = [
   { id: 1, name: "Computer Science", code: "CS" },
   { id: 2, name: "Mathematics", code: "MATH" },
@@ -29,7 +27,6 @@ const CreateSubject = ({ onClose }: { onClose?: () => void }) => {
     e.preventDefault();
     setLoading(true);
 
-    // Simulate API call
     setTimeout(() => {
       console.log("Subject Created:", formData);
       setLoading(false);

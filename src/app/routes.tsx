@@ -1,6 +1,7 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import { Suspense } from "react";
+import DepartmentDetail from "../features/department/pages/Departmentview";
 const MainLayout = React.lazy(() => import("../shared/layouts/MainLayout"));
 const DashBoard = React.lazy(() => import("../features/home/pages/DashBoard"));
 const Subject = React.lazy(() => import("../features/subjects/pages/Subject"));
@@ -25,6 +26,7 @@ export const routes = createBrowserRouter([
             { index: true, element: <DashBoard /> },
             { path: "/courses", element: <Subject /> },
             { path: "/departments", element: <Departments /> },
+            { path: "/department/view", element: <DepartmentDetail /> },
             { path: "/faculty", element: <Faculty /> },
             { path: "/enrollments", element: <Enrollments /> },
             { path: "/classes", element: <Classes /> },

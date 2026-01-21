@@ -5,6 +5,7 @@ import Title from "../../../shared/components/common/Title";
 import type { Department } from '../type';
 import { FloatingFormCard } from '../../../shared/components/common/FloatingForm';
 import CreateDepartment from './DepartmentForm';
+import { Link } from 'react-router-dom';
 
 
 
@@ -92,9 +93,9 @@ const Departments = () => {
       header: "Details",
       accessor: "details",
       render: (item) => (
-        <span className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-semibold cursor-pointer hover:bg-gray-200">
+        <Link to={`/department/view`} className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-semibold cursor-pointer hover:bg-gray-200">
           {item.details}
-        </span>
+        </Link >
       )
     }
   ];
