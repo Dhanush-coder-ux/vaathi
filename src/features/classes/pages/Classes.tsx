@@ -1,5 +1,5 @@
 import  { useState } from 'react';
-import { Search, Filter, Plus,} from 'lucide-react'; // Import icons
+import { Search, Filter, Plus,} from 'lucide-react'; 
 import { Table, type Column } from "../../../shared/components/common/Tabel";
 import Title from '../../../shared/components/common/Title';
 import type { ClassProps } from '../type';

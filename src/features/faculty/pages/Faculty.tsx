@@ -1,5 +1,5 @@
 import  { useState } from 'react';
-import { Search, Filter, Plus } from 'lucide-react'; // Import icons
+import { Search} from 'lucide-react'; // Import icons
 import { Table, type Column } from "../../../shared/components/common/Tabel";
 import Title from "../../../shared/components/common/Title";
 import type { Faculty } from '../type';
@@ -33,21 +33,7 @@ const subjectsData: Faculty[] = [
 const Faculty = () => {
   // 1. State for Search & Filter
   const [searchQuery, setSearchQuery] = useState("");
-  const [roleFilter, setRoleFilter] = useState<'All' | 'teacher' | 'student'>('All');
 
-  // 2. Filter Logic
-  const filteredData = subjectsData.filter((item) => {
-    // Search Name OR Email
-    const matchesSearch = 
-      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.email.toLowerCase().includes(searchQuery.toLowerCase());
-
-    // Filter by Role
-    const matchesRole = 
-      roleFilter === 'All' || item.role === roleFilter;
-
-    return matchesSearch && matchesRole;
-  });
 
   const columns: Column<Faculty>[] = [
     {
@@ -130,7 +116,7 @@ const Faculty = () => {
 
       {/* 4. Table with Filtered Data */}
       <Table
-        data={filteredData}
+        data={subjectsData}
         columns={columns}
       />
     </div>

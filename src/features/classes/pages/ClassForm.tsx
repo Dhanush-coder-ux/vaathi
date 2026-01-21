@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Save, X, Upload, ChevronDown, Image as ImageIcon } from 'lucide-react';
-import Title from "../../../shared/components/common/Title";
+import { Save, X, Upload, ChevronDown} from 'lucide-react';
+
 
 // Dummy Data for Dropdowns
 const subjects = [
