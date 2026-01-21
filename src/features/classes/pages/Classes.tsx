@@ -2,16 +2,11 @@ import  { useState } from 'react';
 import { Search, Filter, Plus,} from 'lucide-react'; // Import icons
 import { Table, type Column } from "../../../shared/components/common/Tabel";
 import Title from '../../../shared/components/common/Title';
+import type { ClassProps } from '../type';
+import { FloatingFormCard } from '../../../shared/components/common/FloatingForm';
+import CreateClass from './ClassForm';
 
-interface ClassProps {
-  id: number;
-  Banner?: string;
-  className: string;
-  status: 'Live' | 'Completed';
-  subject: string;
-  Teacher: string;
-  details: string;
-}
+
 
 const subjectsData: ClassProps[] = [
   {
@@ -21,6 +16,7 @@ const subjectsData: ClassProps[] = [
     status: 'Live',
     subject: 'Science',
     Teacher: 'Dhanush',
+    capacity:89,
     details: "View"
   },
   {
@@ -28,6 +24,7 @@ const subjectsData: ClassProps[] = [
     Banner: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=150&q=80",
     className: "Os Lab",
     status: 'Completed',
+     capacity:79,
     subject: 'Biology',
     Teacher: 'Sarah',
     details: "View"
@@ -38,27 +35,27 @@ const subjectsData: ClassProps[] = [
     className: "LHs-4",
     status: 'Live',
     subject: 'Chemistry',
+     capacity:56,
     Teacher: 'Mike',
     details: "View"
   },
 ];
 
 const Classes = () => {
-  // 1. State for Text Search
+
   const [searchQuery, setSearchQuery] = useState("");
+  const [ isOpen, setIsOpen ] = useState(false);
   
-  // 2. State for Status Filter (All / Live / Completed)
+
   const [statusFilter, setStatusFilter] = useState<'All' | 'Live' | 'Completed'>('All');
 
-  // 3. Combined Filter Logic
   const filteredData = subjectsData.filter((item) => {
-    // Step A: Check Search Text
+    
     const matchesSearch = 
       item.className.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.Teacher.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.subject.toLowerCase().includes(searchQuery.toLowerCase());
 
-    // Step B: Check Status Dropdown
     const matchesStatus = 
       statusFilter === 'All' || item.status === statusFilter;
 
@@ -101,6 +98,11 @@ const Classes = () => {
       className: "text-gray-600"
     },
     {
+      header: "Capacity",
+      accessor: "capacity",
+      className: "text-gray-600"
+    },
+    {
       header: "Subject",
       accessor: "subject",
       render: (item) => (
@@ -136,16 +138,14 @@ const Classes = () => {
   ];
 
   return (
-    <div className="bg-gray-50  p-6">
+    <div className="p-6">
       <Title
         title="Classes"
         subtitle="Manage and overview all your classes efficiently."
       />
 
-      {/* 4. Toolbar Section */}
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6 mt-6">
-        
-        {/* Left Side: Search Bar */}
+
         <div className="relative w-full sm:w-72">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
           <input
@@ -157,19 +157,17 @@ const Classes = () => {
           />
         </div>
 
-        {/* Right Side: Filters & Actions */}
         <div className="flex gap-3 w-full sm:w-auto">
-          
-          {/* Status Dropdown Filter */}
+    
           <div className="relative">
             <select 
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value as 'All' | 'Live' | 'Completed')}
               className="appearance-none bg-white border border-gray-200 text-gray-700 py-2 pl-4 pr-10 rounded-lg focus:outline-none cursor-pointer hover:bg-gray-50 transition-colors"
             >
-              <option value="All">All Status</option>
-              <option value="Live">Live</option>
-              <option value="Completed">Completed</option>
+              <option value="All">All subject</option>
+              <option value="Live">cs</option>
+              <option value="Completed">dsa</option>
             </select>
             <Filter className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 pointer-events-none" />
           </div>
@@ -186,15 +184,21 @@ const Classes = () => {
             <Filter className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 pointer-events-none" />
           </div>
 
-          {/* Create Button */}
-          <button className="bg-[#D96B4D] hover:bg-[#c25e41] text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 shadow-sm">
+          <button onClick={()=>setIsOpen(true)} className="bg-[#D96B4D] hover:bg-[#c25e41] text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 shadow-sm">
             <Plus className="w-4 h-4" />
             Create
           </button>
         </div>
       </div>
+      <FloatingFormCard
+      title='Create classes'
+      onClose={()=>setIsOpen(false)}
+      isOpen={isOpen}
+      maxWidth='max-w-4xl'
+      >
+        <CreateClass onClose={()=>setIsOpen(false)}/>
+      </FloatingFormCard>
 
-      {/* 5. Table with Filtered Data */}
       <Table
         data={filteredData}
         columns={columns}

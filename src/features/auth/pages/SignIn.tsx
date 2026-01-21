@@ -23,7 +23,7 @@ const SignIn = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <div className="w-full max-w-sm bg-white rounded-xl border border-gray-200 shadow-md">
 
-        {/* Header */}
+       
         <div className="px-6 pt-6 pb-4 text-center">
           <div className="flex justify-center mb-3">
             <img

@@ -2,15 +2,11 @@ import  { useState } from 'react';
 import { Search, Filter, Plus } from 'lucide-react'; // 1. Import icons
 import { Table, type Column } from "../../../shared/components/common/Tabel";
 import Title from "../../../shared/components/common/Title";
+import type { Subject } from '../type';
+import { FloatingFormCard } from '../../../shared/components/common/FloatingForm';
+import CreateSubject from './SubjectForm';
 
-interface Subject {
-  id: number;
-  code: string;
-  name: string;
-  department: string;
-  description: string;
-  details: string;
-}
+
 
 const subjectsData: Subject[] = [
   {
@@ -42,6 +38,7 @@ const subjectsData: Subject[] = [
 const Subject = () => {
   // 2. Add State for search
   const [searchQuery, setSearchQuery] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // 3. Add Filter Logic (searches by Code, Name, or Department)
   const filteredData = subjectsData.filter((item) =>
@@ -96,7 +93,7 @@ const Subject = () => {
   ];
 
   return (
-    <div className="bg-gray-50 p-6">
+    <div className="p-6">
       <Title
         title="Subjects"
         subtitle="Manage and overview all your subjects efficiently."
@@ -119,17 +116,24 @@ const Subject = () => {
         {/* Action Buttons */}
         <div className="flex gap-3 w-full sm:w-auto">
           <button className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg text-gray-600 bg-white hover:bg-gray-50 transition-colors shadow-sm">
-            <span className="text-sm">All Departments</span>
+            <span className="text-sm">All subjects</span>
             <Filter className="w-4 h-4" />
           </button>
           
-          <button className="bg-[#D96B4D] hover:bg-[#c25e41] text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 shadow-sm">
+          <button onClick={()=>setIsModalOpen(true)} className="bg-[#D96B4D] hover:bg-[#c25e41] text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 shadow-sm">
             <Plus className="w-4 h-4" />
             Create
           </button>
         </div>
       </div>
-
+      <FloatingFormCard
+        isOpen={isModalOpen}
+        onClose={()=>setIsModalOpen(false)}
+        title='Create a Subject'
+        maxWidth='max-w-4xl'
+      >
+        <CreateSubject onClose={()=>setIsModalOpen(false)}/>
+      </FloatingFormCard>
       {/* 5. Pass filteredData to Table */}
       <Table 
         data={filteredData}

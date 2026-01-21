@@ -9,7 +9,7 @@ export interface Column<T> {
   className?: string;
 }
 
-interface GenericTableProps<T> {
+export interface GenericTableProps<T> {
   data: T[];
   columns: Column<T>[];
   actionLabel?: string;

@@ -2,15 +2,9 @@ import  { useState } from 'react';
 import { Search, Filter, Plus } from 'lucide-react'; // Import icons
 import { Table, type Column } from "../../../shared/components/common/Tabel";
 import Title from "../../../shared/components/common/Title";
+import type { Faculty } from '../type';
 
-interface Faculty {
-  id: number;
-  name: string;
-  email: string;
-  role: "teacher" | "student";
-  details: string;
-  profileUrl?: string;
-}
+
 
 const subjectsData: Faculty[] = [
   {
@@ -111,7 +105,7 @@ const Faculty = () => {
   ];
 
   return (
-    <div className="bg-gray-50  p-6">
+    <div className="p-6">
       <Title
         title="Faculty"
         subtitle="Manage and overview all your faculty members efficiently."
@@ -132,29 +126,6 @@ const Faculty = () => {
           />
         </div>
 
-        {/* Filters & Actions */}
-        <div className="flex gap-3 w-full sm:w-auto">
-          
-          {/* Role Filter Dropdown */}
-          <div className="relative">
-            <select 
-              value={roleFilter}
-              onChange={(e) => setRoleFilter(e.target.value as 'All' | 'teacher' | 'student')}
-              className="appearance-none bg-white border border-gray-200 text-gray-700 py-2 pl-4 pr-10 rounded-lg focus:outline-none cursor-pointer hover:bg-gray-50 transition-colors shadow-sm"
-            >
-              <option value="All">All Roles</option>
-              <option value="teacher">Teachers</option>
-              <option value="student">Students</option>
-            </select>
-            <Filter className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 pointer-events-none" />
-          </div>
-
-          {/* Create Button */}
-          <button className="bg-[#D96B4D] hover:bg-[#c25e41] text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 shadow-sm">
-            <Plus className="w-4 h-4" />
-            Create
-          </button>
-        </div>
       </div>
 
       {/* 4. Table with Filtered Data */}

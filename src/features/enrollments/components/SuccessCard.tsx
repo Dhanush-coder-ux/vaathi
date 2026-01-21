@@ -1,7 +1,6 @@
-import React from 'react'
-interface SuccessCardProps {
-  setSuccess: React.Dispatch<React.SetStateAction<boolean>>;
-}
+
+import type { SuccessCardProps } from '../type'
+
 const SuccessCard = ({ setSuccess }:SuccessCardProps) => {
   return (
       <div className="max-w-md mx-auto mt-10 p-8 bg-white rounded-xl shadow-lg border border-green-100 text-center">

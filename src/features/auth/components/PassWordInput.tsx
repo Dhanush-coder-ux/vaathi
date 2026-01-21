@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { Lock, Eye, EyeOff } from 'lucide-react';
+import type { PasswordInputProps } from '../type';
 
-interface PasswordInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label?: string;
-}
+
 
 const PasswordInput = ({ label = "Password", className, ...props }: PasswordInputProps) => {
   const [showPassword, setShowPassword] = useState(false);

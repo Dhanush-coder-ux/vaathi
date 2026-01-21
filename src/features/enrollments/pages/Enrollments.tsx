@@ -2,15 +2,13 @@
 import Title from '../../../shared/components/common/Title';
 import EnrollmentForm from './EnrollmentForm';
 
-// Mock data for the dropdown
-
 
 const Enrollments = () => {
 
 
   return (
 
-    <div className="w-full bg-white p-6 ">
+    <div className="w-full bg-white ">
     
       <Title
         title="Enrollments"

@@ -2,15 +2,11 @@ import { useState } from 'react';
 import { Search, Filter, Plus } from 'lucide-react'; // Make sure to install: npm i lucide-react
 import { Table, type Column } from "../../../shared/components/common/Tabel";
 import Title from "../../../shared/components/common/Title";
+import type { Department } from '../type';
+import { FloatingFormCard } from '../../../shared/components/common/FloatingForm';
+import CreateDepartment from './DepartmentForm';
 
-interface Department {
-  id: number;
-  code: string;
-  name: string;
-  subjects: number;
-  description: string;
-  details: string;
-}
+
 
 const subjectsData: Department[] = [
   {
@@ -50,6 +46,7 @@ const subjectsData: Department[] = [
 const Departments = () => {
   // 1. State for the search query
   const [searchQuery, setSearchQuery] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // 2. Filter logic: Filters data based on Name OR Code
   const filteredData = subjectsData.filter((item) =>
@@ -103,7 +100,7 @@ const Departments = () => {
   ];
 
   return (
-    <div className="bg-gray-50  p-6"> {/* Added padding for better layout */}
+    <div className="p-6"> {/* Added padding for better layout */}
       
       <Title
         title="Departments"
@@ -131,13 +128,20 @@ const Departments = () => {
             <Filter className="w-4 h-4" />
           </button>
           
-          <button className="bg-[#D96B4D] hover:bg-[#c25e41] text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 shadow-sm">
+          <button onClick={()=>setIsModalOpen(true)} className="bg-[#D96B4D] hover:bg-[#c25e41] text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 shadow-sm">
             <Plus className="w-4 h-4" />
             Create
           </button>
         </div>
       </div>
-
+      <FloatingFormCard
+      isOpen={isModalOpen}
+      onClose={()=>setIsModalOpen(false)}
+      title='Create a Department'
+      maxWidth='max-w-4xl'
+      >
+        <CreateDepartment onClose={()=>setIsModalOpen(false)}/>
+      </FloatingFormCard>
       {/* 4. Pass the filteredData instead of raw subjectsData */}
       <Table
         data={filteredData}
